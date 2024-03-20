@@ -10,7 +10,7 @@ exports.HomePage = class HomePage {
     this.url = process.env['URL'];
 
     // defined by static locator with css selector
-    this.image_title = 'header > a > img';
+    this.image_title = page.locator('header > a > img');
     // defined with built-in locator functions
     this.elements_menu = page.getByRole('heading', { name: 'Elements' });
     this.forms_menu = page.getByRole('heading', { name: 'Forms' });
@@ -25,14 +25,17 @@ exports.HomePage = class HomePage {
   }
 
   async validateHomePage(){
-    await this.page.waitForSelector(this.image_title);
-    await expect(this.page.locator(this.image_title)).toBeVisible();
+    await expect(this.image_title).toBeVisible();
     await expect(this.elements_menu).toBeVisible();
     await expect(this.forms_menu).toBeVisible();
     await expect(this.alert_frame_window_menu).toBeVisible();
     await expect(this.widget_menu).toBeVisible();
     await expect(this.interaction_menu).toBeVisible();
     await expect(this.books_app_menu).toBeVisible();
+  }
+
+  async openElementsMenu(){
+    await this.elements_menu.click();
   }
 
 }
